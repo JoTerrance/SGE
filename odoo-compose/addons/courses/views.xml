@@ -1,4 +1,45 @@
 <odoo>
+<!-- add course form -->
+    <record id="view_course_form" model="ir.ui.view">
+        <field name="name">course.form</field>
+        <field name="model">course.course</field>
+        <field name="arch" type="xml">
+            <form string="Course Form">
+                <sheet>
+                    <group>
+                        <field name="nombre"/>
+                        <field name="description"/>
+                        <field name="duration"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
 
+<!-- add course list view   -->
+    <record id="view_course_tree" model="ir.ui.view">
+        <field name="name">course.tree</field>
+        <field name="model">course.course</field>
+        <field name="arch" type="xml">
+            <tree string="Course List">
+                <field name="nombre"/>
+                <field name="duration"/>
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+
+<!-- add course action -->
+    <record id="action_course" model="ir.actions.act_window">
+        <field name="name">Courses</field>
+        <field name="res_model">course.course</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+<!-- add course menu item -->
+    <menuitem id="menu_course_root" name="Courses"/>
+    <menuitem id="menu_course_management" name="Course Management" 
+        parent="menu_course_root" action="action_course"/>
 
 </odoo>
