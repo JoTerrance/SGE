@@ -10,7 +10,26 @@
                         <field name="nombre"/>
                         <field name="description"/>
                         <field name="duration"/>
-                        <field name="active"/>
+                        <field name="course_act"/>
+                        <field name="students" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+<!-- add student form -->
+    <record id="view_student_form" model="ir.ui.view">
+        <field name="name">student.form</field>
+        <field name="model">course.student</field>
+        <field name="arch" type="xml">
+            <form string="Student Form">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="age"/>
+                        <field name="email"/>
+                        <field name="enrolled_courses" />
                     </group>
                 </sheet>
             </form>
@@ -22,13 +41,29 @@
         <field name="name">course.list</field>
         <field name="model">course.course</field>
         <field name="arch" type="xml">
-            <list string="Course List">
+            <list string="Course List" >
                 <field name="nombre"/>
                 <field name="duration"/>
-                <field name="active"/>
+                <field name="course_act" />
+                <field name="students" />
             </list>
         </field>
     </record>
+
+<!-- add student list view -->
+    <record id="view_student_list" model="ir.ui.view">
+        <field name="name">student.list</field>
+        <field name="model">course.student</field>
+        <field name="arch" type="xml">
+            <list string="Student List" >
+                <field name="name"/>
+                <field name="age"/>
+                <field name="email"/>
+                <field name="enrolled_courses" />
+            </list>
+        </field>
+    </record>
+
 
 <!-- add course action -->
     <record id="action_course" model="ir.actions.act_window">
@@ -37,9 +72,18 @@
         <field name="view_mode">list,form</field>
     </record>
 
+<!-- add student action -->
+    <record id="action_student" model="ir.actions.act_window">
+        <field name="name">Students</field>
+        <field name="res_model">course.student</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
 <!-- add course menu item -->
     <menuitem id="menu_course_root" name="Courses"/>
     <menuitem id="menu_course_management" name="Course Management" 
         parent="menu_course_root" action="action_course"/>
+    <menuitem id="menu_student_management" name="Student Management" 
+        parent="menu_course_root" action="action_student"/>
 
 </odoo>
