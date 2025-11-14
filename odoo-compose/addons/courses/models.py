@@ -26,4 +26,16 @@ class Student(models.Model):
     age = fields.Integer(string='Age')
     email = fields.Char(string='Email')
     enrolled_courses = fields.Many2one('course.course', string='Enrolled Course')
+    sessions = fields.Many2many('course.session', string='Sessions Attended')
+
+# create a model sessions
+class Session(models.Model):
+    _name = 'course.session'
+    _description = 'Session'
+
+    course_id = fields.Many2one('course.course', string='Course', required=True)
+    session_date = fields.Datetime(string='Session Date', required=True)
+    duration = fields.Integer(string='Duration (hours)')
+    instructor = fields.Char(string='Instructor')
+    students = fields.Many2many('course.student', string='Attending Students')
 
