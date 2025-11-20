@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api
+from odoo.exceptions import ValidationError
+from datetime import datetime
 
 
 #create a model called course
@@ -23,10 +25,20 @@ class Student(models.Model):
     _description = 'Student'
 
     name = fields.Char(string='Student Name', required=True)
+    dni = fields.Char(string='DNI', required=True)
+                       
     age = fields.Integer(string='Age')
     email = fields.Char(string='Email')
     enrolled_courses = fields.Many2one('course.course', string='Enrolled Course')
     sessions = fields.Many2many('course.session', string='Sessions Attended')
+
+    @api.constrains('dni')
+    def _check_dni_unique(self):
+        for record in self:
+            if self.search_count([('dni', '=', record.dni)]) > 1:
+                raise  ValidationError("DNI must be unique.")
+            
+
 
 # create a model sessions
 class Session(models.Model):
@@ -38,4 +50,12 @@ class Session(models.Model):
     duration = fields.Integer(string='Duration (hours)')
     instructor = fields.Char(string='Instructor')
     students = fields.Many2many('course.student', string='Attending Students')
+
+
+    @api.constrains('session_date')
+    def _check_session_date_future(self):
+        
+        for record in self:
+            if record.session_date < datetime.now():
+                raise ValidationError("Session date must be in the future.")    
 
