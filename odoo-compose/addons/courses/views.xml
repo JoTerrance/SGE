@@ -15,6 +15,7 @@
                         <field name="price"/>
                         <field name="amount_discount"/>
                         <field name="total_price" readonly="1"/>
+                        <field name="min_age"/>
                     </group>
                 </sheet>
             </form>

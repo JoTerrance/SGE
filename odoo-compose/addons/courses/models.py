@@ -20,17 +20,18 @@ class Course(models.Model):
     price = fields.Float(string='Course Price')
     amount_discount = fields.Float(string='Discount Amount')
     total_price = fields.Float(string='Total Price')
+    min_age = fields.Integer(string='Minimum Age Requirement', default=18)
 
     @api.onchange('price', 'amount_discount')
     def _onchange_total_price(self):
         for record in self:
             record.total_price = record.price - record.amount_discount
-        #if record.total_price <= record.price:
+        if record.total_price <= record.price:
             # Can optionally return a warning and domains
             return {
                 'warning': {
-                    'title': "tacaño",
-                    'message': "haz un descuento mayor",
+                    'title': "precio negativo",
+                    'message': "el precio total no puede ser negativo",
                 }
             }
         
@@ -49,16 +50,22 @@ class Student(models.Model):
     _description = 'Student'
 
     name = fields.Char(string='Student Name', required=True)
-    dni = fields.Char(string='DNI', required=True, compute='_calculate_dni_letter', store=True )
+    dni = fields.Char(string='DNI', required=True )
 
                        
     age = fields.Integer(string='Age')
-    email = fields.Char(string='Email', compute='_compute_email ', store=True)
-    enrolled_courses = fields.Many2one('course.course', string='Enrolled Course')
+    email = fields.Char(string='Email', compute='_compute_email', store=True)
+    enrolled_courses = fields.Many2one('course.course', string='Enrolled Course', ondelete='set null')
     sessions = fields.Many2many('course.session', string='Sessions Attended')
 
+    @api.constrains('age')
+    def _check_minimum_age(self):
+        for record in self:
+            if record.enrolled_courses and record.age < record.enrolled_courses.min_age:
+                raise ValidationError("Student does not meet the minimum age requirement for this course.")
+
     @api.depends('name', 'age')
-    def _compute_email (self):
+    def _compute_email(self):
         for record in self:
             if record.name:
                 record.email = record.name.lower().replace(" ", ".")+ str(record.age) + "@example.com"
@@ -66,7 +73,7 @@ class Student(models.Model):
                 record.email = ""
 
 
-    @api.depends('dni')
+    @api.onchange('dni')
     def _calculate_dni_letter(self):
         letters = "TRWAGMYFPDXBNJZSQVHLCKE"
         for record in self:
