@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
-
 from odoo import models, fields, api
 from odoo.exceptions import ValidationError
 from datetime import datetime
 from datetime import timedelta
+import logging
 
+_logger = logging.getLogger(__name__)
 
 #create a model called course
 class Course(models.Model):
@@ -24,9 +25,8 @@ class Course(models.Model):
 
     @api.onchange('price', 'amount_discount')
     def _onchange_total_price(self):
-        for record in self:
-            record.total_price = record.price - record.amount_discount
-        if record.total_price <= record.price:
+        self.total_price = self.price - self.amount_discount
+        if self.total_price <= self.price:
             # Can optionally return a warning and domains
             return {
                 'warning': {
@@ -35,15 +35,14 @@ class Course(models.Model):
                 }
             }
         
-        
-
-
     @api.depends('duration', 'nombre')
     def _compute_name(self):
         for record in self:
+            #log
+            _logger.info("Computing description for record: %s", record.nombre)
+
             record.description = "Record %s with duration %s" % (record.nombre, record.duration)
     
-
 #create a model called student
 class Student(models.Model):
     _name = 'course.student'
@@ -52,7 +51,6 @@ class Student(models.Model):
     name = fields.Char(string='Student Name', required=True)
     dni = fields.Char(string='DNI', required=True )
 
-                       
     age = fields.Integer(string='Age')
     email = fields.Char(string='Email', compute='_compute_email', store=True)
     enrolled_courses = fields.Many2one('course.course', string='Enrolled Course', ondelete='set null')
@@ -82,19 +80,14 @@ class Student(models.Model):
                 index = number % 23
                 record.dni = record.dni[:-1] + letters[index]
             else:
-                record.dni = record.dni
-
-   
+                record.dni = record.dni 
 
     @api.constrains('dni')
     def _check_dni_unique(self):
         for record in self:
             if self.search_count([('dni', '=', record.dni)]) > 1:
                 raise  ValidationError("DNI must be unique.")
-                   
             
-
-
 # create a model sessions
 class Session(models.Model):
     _name = 'course.session'
@@ -122,7 +115,6 @@ class Session(models.Model):
             else:
                 record.duration = 0
 
-
     @api.depends('start_time', 'duration')
     def _compute_end_time(self):
         for record in self:
@@ -133,8 +125,6 @@ class Session(models.Model):
 
     @api.constrains('session_date')
     def _check_session_date_future(self):
-        
         for record in self:
             if record.session_date < datetime.now():
                 raise ValidationError("Session date must be in the future.")    
-
