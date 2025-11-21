@@ -12,6 +12,9 @@
                         <field name="duration"/>
                         <field name="course_act"/>
                         <field name="students" />
+                        <field name="price"/>
+                        <field name="amount_discount"/>
+                        <field name="total_price" readonly="1"/>
                     </group>
                 </sheet>
             </form>

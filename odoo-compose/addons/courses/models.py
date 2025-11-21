@@ -12,11 +12,25 @@ class Course(models.Model):
     _rec_name = 'nombre'
 
     nombre = fields.Char(string='Course Name', required=True)
-    description = fields.Text(string='Course Description')
+    description = fields.Text(string='Course Description', compute='_compute_name')
     duration = fields.Integer(string='Duration (hours)')
     course_act = fields.Boolean(string='Active', default=True)
     students = fields.One2many('course.student', 'enrolled_courses', string='Enrolled Students')
-    
+    price = fields.Float(string='Course Price')
+    amount_discount = fields.Float(string='Discount Amount')
+    total_price = fields.Float(string='Total Price')
+
+    @api.onchange('price', 'amount_discount')
+    def _onchange_total_price(self):
+        for record in self:
+            record.total_price = record.price - record.amount_discount
+
+
+
+    @api.depends('duration', 'nombre')
+    def _compute_name(self):
+        for record in self:
+            record.description = "Record %s with duration %s" % (record.nombre, record.duration)
     
 
 #create a model called student
