@@ -17,9 +17,13 @@
 
     # always loaded
     'data': [
+        'ir.model.access.csv',
         'views.xml',
 	# 'vistas/matches.xml',
 	# 'vistas/maps.xml',
 	# 'vistas/characters.xml',
     ],
+
+   
+
 }

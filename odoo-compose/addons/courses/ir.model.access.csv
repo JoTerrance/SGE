@@ -1,0 +1,15 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_company_info_user,company.info.user,model_company_info,base.group_user,1,1,1,1
+access_company_tracking_user,company.tracking.user,model_company_tracking,base.group_user,1,1,1,1
+access_company_fct_interest_user,company.fct.interest.user,model_company_fct_interest,base.group_user,1,1,1,1
+access_education_cycle_user,education.cycle.user,model_education_cycle,base.group_user,1,1,1,1
+access_company_phone_user,company.phone.user,model_company_phone,base.group_user,1,1,1,1
+access_company_workplace_user,company.workplace.user,model_company_workplace,base.group_user,1,1,1,1
+access_company_tutor_user,company.tutor.user,model_company_tutor,base.group_user,1,1,1,1
+access_company_info_public,company.info.public,model_company_info,base.group_public,1,0,0,0
+access_company_tracking_public,company.tracking.public,model_company_tracking,base.group_public,1,0,0,0
+access_company_fct_interest_public,company.fct.interest.public,model_company_fct_interest,base.group_public,1,0,0,0
+access_education_cycle_public,education.cycle.public,model_education_cycle,base.group_public,1,0,0,0
+access_company_phone_public,company.phone.public,model_company_phone,base.group_public,1,0,0,0
+access_company_workplace_public,company.workplace.public,model_company_workplace,base.group_public,1,0,0,0
+access_company_tutor_public,company.tutor.public,model_company_tutor,base.group_public,1,0,0,0
