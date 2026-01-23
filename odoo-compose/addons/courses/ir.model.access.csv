@@ -13,3 +13,9 @@ access_education_cycle_public,education.cycle.public,model_education_cycle,base.
 access_company_phone_public,company.phone.public,model_company_phone,base.group_public,1,0,0,0
 access_company_workplace_public,company.workplace.public,model_company_workplace,base.group_public,1,0,0,0
 access_company_tutor_public,company.tutor.public,model_company_tutor,base.group_public,1,0,0,0
+access_course_course_user,course.course.read,model_course_course,base.group_user,1,0,0,0
+access_course_student_user,course.student.read,model_course_student,base.group_user,1,0,0,0
+access_course_session_user,course.session.read,model_course_session,base.group_user,1,0,0,0
+access_course_course_admin,course.course.full,model_course_course,base.group_system,1,1,1,1
+access_course_student_admin,course.student.full,model_course_student,base.group_system,1,1,1,1
+access_course_session_admin,course.session.full,model_course_session,base.group_system,1,1,1,1
