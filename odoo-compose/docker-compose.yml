@@ -1,8 +1,6 @@
 services:
   web:
-    build:
-      context: .
-      dockerfile: dockerfile.dev
+    image: odoo:19.0
     depends_on:
       - db
     ports:
@@ -11,7 +9,6 @@ services:
       - odoo-web-data:/var/lib/odoo
       - ./config:/etc/odoo
       - ./addons:/mnt/my-module
-
   db:
     image: postgres:16
     ports:
@@ -23,7 +20,6 @@ services:
       - PGDATA=/var/lib/postgresql/data/pgdata
     volumes:
       - odoo-db-data:/var/lib/postgresql/data/pgdata
-
 volumes:
   odoo-web-data:
   odoo-db-data:
