@@ -1,7 +1,0 @@
-FROM odoo:19
-
-USER root
-RUN apt-get update && apt-get install -y bash vim && \
-    usermod -s /bin/bash odoo
-
-USER odoo
