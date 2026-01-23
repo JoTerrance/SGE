@@ -1,7 +1,7 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_course_course,course.course.access,model_course_course,base.group_user,1,1,1,1
-access_course_student,course.student.access,model_course_student,base.group_user,1,1,1,1
-access_course_session,course.session.access,model_course_session,base.group_user,1,1,1,1
-access_course_course_public,course.course.access.public,model_course_course,base.group_public,1,0,0,0
-access_course_session_public,course.session.access.public,model_course_session,base.group_public,1,0,0,0
-access_course_student_public,course.student.access.public,model_course_student,base.group_public,1,0,0,0
+access_course_group_user,course.course.user,model_course_course,base.group_user,1,1,1,1
+access_student_group_user,course.student.user,model_course_student,base.group_user,1,1,1,1
+access_session_group_user,course.session.user,model_course_session,base.group_user,1,1,1,1
+access_course_public,course.course.public,model_course_course,base.group_public,1,1,1,1
+access_student_public,course.student.public,model_course_student,base.group_public,1,1,1,1
+access_session_public,course.session.public,model_course_session,base.group_public,1,1,1,1
