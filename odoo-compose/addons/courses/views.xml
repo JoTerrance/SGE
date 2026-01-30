@@ -5,6 +5,9 @@
         <field name="model">course.course</field>
         <field name="arch" type="xml">
             <form string="Course Form">
+                <header>
+                    <button name="%(action_course_report)d" string="Descargar Informe" type="action" class="btn-primary"/>
+                </header>
                 <sheet>
                     <group>
                         <field name="nombre"/>
@@ -75,6 +78,7 @@
                 <field name="duration"/>
                 <field name="course_act" />
                 <field name="students" />
+                <button name="%(action_course_report)d" string="Descargar Informe" type="action" class="btn-primary"/>
             </list>
         </field>
     </record>
@@ -93,6 +97,7 @@
                 <templates>
                     <!-- mostrar en columnas kanbas segun la edad minima requerida
                       con dos columnas si se requiere +18 o puede inscribirse un menor-->
+
                     <t t-name="card">
                         <div class="oe_kanban_card oe_kanban_global_click">
                             <div class="oe_kanban_content">
@@ -118,15 +123,14 @@
         </field>
     </record>
 
-<!-- add a course report 
+<!-- add a course report -->
     <record id="action_course_report" model="ir.actions.report">
         <field name="name">Course Report</field>
         <field name="model">course.course</field>
         <field name="report_type">qweb-pdf</field>
         <field name="report_name">courses.course_report_template</field>
-        <field name="file">courses.course_report_template</field>
     </record>
--->
+
 
 <!-- add student list view -->
     <record id="view_student_list" model="ir.ui.view">
