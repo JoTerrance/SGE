@@ -5,6 +5,9 @@
         <field name="model">course.course</field>
         <field name="arch" type="xml">
             <form string="Course Form">
+                <header>
+                    <button name="%(action_course_report)d" string="Descargar Informe" type="action" class="btn-primary"/>
+                </header>
                 <sheet>
                     <group>
                         <field name="nombre"/>
@@ -75,9 +78,59 @@
                 <field name="duration"/>
                 <field name="course_act" />
                 <field name="students" />
+                <button name="%(action_course_report)d" string="Descargar Informe" type="action" class="btn-primary"/>
             </list>
         </field>
     </record>
+
+<!-- add course kanban view -->
+    <record id="view_course_kanban" model="ir.ui.view">
+        <field name="name">course.kanban</field>
+        <field name="model">course.course</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="nombre"/>
+                <field name="duration"/>
+                <field name="price"/>
+                <field name="total_price"/>
+                <field name="course_act"/>
+                <templates>
+                    <!-- mostrar en columnas kanbas segun la edad minima requerida
+                      con dos columnas si se requiere +18 o puede inscribirse un menor-->
+
+                    <t t-name="card">
+                        <div class="oe_kanban_card oe_kanban_global_click">
+                            <div class="oe_kanban_content">
+                                <div class="o_kanban_record_top">
+                                    <strong><field name="nombre"/></strong>
+                                </div>
+                                <div class="o_kanban_record_body">
+                                    <field name="description"/>
+                                    <div>Duration: <field name="duration"/> hours</div>
+                                    <!--mostrar el precio solo si la duracion es mayor a tres-->
+
+                                    <div>Price: <field name="price"/></div>
+                                    <div>Total: <field name="total_price"/></div>
+                                </div>
+                                <div class="o_kanban_record_bottom">
+                                    <field name="course_act" widget="boolean_toggle"/>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+<!-- add a course report -->
+    <record id="action_course_report" model="ir.actions.report">
+        <field name="name">Course Report</field>
+        <field name="model">course.course</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">courses.course_report_template</field>
+    </record>
+
 
 <!-- add student list view -->
     <record id="view_student_list" model="ir.ui.view">
@@ -90,6 +143,38 @@
                 <field name="email"/>
                 <field name="enrolled_courses" />
             </list>
+        </field>
+    </record>
+
+<!-- add student kanban view -->
+    <record id="view_student_kanban" model="ir.ui.view">
+        <field name="name">student.kanban</field>
+        <field name="model">course.student</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="name"/>
+                <field name="dni"/>
+                <field name="age"/>
+                <field name="email"/>
+                <field name="enrolled_courses"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="oe_kanban_card oe_kanban_global_click">
+                            <div class="oe_kanban_content">
+                                <div class="o_kanban_record_top">
+                                    <strong><field name="name"/></strong>
+                                </div>
+                                <div class="o_kanban_record_body">
+                                    <div>DNI: <field name="dni"/></div>
+                                    <div>Age: <field name="age"/></div>
+                                    <div>Email: <field name="email"/></div>
+                                    <div>Course: <field name="enrolled_courses"/></div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
         </field>
     </record>
 
@@ -108,26 +193,56 @@
         </field>
     </record>
 
+<!-- add session kanban view -->
+    <record id="view_session_kanban" model="ir.ui.view">
+        <field name="name">session.kanban</field>
+        <field name="model">course.session</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="course_id"/>
+                <field name="session_date"/>
+                <field name="duration"/>
+                <field name="instructor"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="oe_kanban_card oe_kanban_global_click">
+                            <div class="oe_kanban_content">
+                                <div class="o_kanban_record_top">
+                                    <strong><field name="course_id"/></strong>
+                                </div>
+                                <div class="o_kanban_record_body">
+                                    <div>Date: <field name="session_date"/></div>
+                                    <div>Duration: <field name="duration"/> hours</div>
+                                    <div>Instructor: <field name="instructor"/></div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
 
 <!-- add course action -->
     <record id="action_course" model="ir.actions.act_window">
         <field name="name">Courses</field>
         <field name="res_model">course.course</field>
-        <field name="view_mode">list,form</field>
+        <field name="view_mode">kanban,list,form</field>
     </record>
 
 <!-- add student action -->
     <record id="action_student" model="ir.actions.act_window">
         <field name="name">Students</field>
         <field name="res_model">course.student</field>
-        <field name="view_mode">list,form</field>
+        <field name="view_mode">kanban,list,form</field>
     </record>
 
     <!-- add session action -->
     <record id="action_session" model="ir.actions.act_window">
         <field name="name">Sessions</field>
         <field name="res_model">course.session</field>
-        <field name="view_mode">list,form</field>
+        <field name="view_mode">kanban,list,form</field>
     </record>
 
 <!-- add course menu item -->

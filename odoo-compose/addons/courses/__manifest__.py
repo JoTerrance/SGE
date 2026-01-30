@@ -19,6 +19,7 @@
     'data': [
         'ir.model.access.csv',
         'views.xml',
+        'course_report_template.xml',
 	# 'vistas/matches.xml',
 	# 'vistas/maps.xml',
 	# 'vistas/characters.xml',

@@ -1,0 +1,15 @@
+<odoo>
+    <template id="course_report_template">
+        <t t-call="web.basic_layout">
+            <t t-foreach="docs" t-as="doc">
+                <div class="page">
+                    <h2>Course Report: <t t-esc="doc.nombre"/></h2>
+                    <p><strong>Description:</strong> <t t-esc="doc.description"/></p>
+                    <p><strong>Duration (hours):</strong> <t t-esc="doc.duration"/></p>
+                    <p><strong>Price:</strong> <t t-esc="doc.price"/></p>
+                    <p><strong>Minimum Age:</strong> <t t-esc="doc.min_age"/></p>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>
