@@ -88,7 +88,9 @@
         <field name="name">course.kanban</field>
         <field name="model">course.course</field>
         <field name="arch" type="xml">
-            <kanban>
+            <!-- For de colums according to age -->
+            <kanban default_group_by="age_category">
+                <field name="age_category"/>
                 <field name="nombre"/>
                 <field name="duration"/>
                 <field name="price"/>
@@ -107,8 +109,10 @@
                                 <div class="o_kanban_record_body">
                                     <field name="description"/>
                                     <div>Duration: <field name="duration"/> hours</div>
-                                    <!--mostrar el precio solo si la duracion es mayor a tres-->
-
+                                    <!--To hide the price if the duration is short-->
+                                    <t t-if="record.duration.raw_value > 3">
+                                        <div>Price: <field name="price"/></div>
+                                    </t>
                                     <div>Price: <field name="price"/></div>
                                     <div>Total: <field name="total_price"/></div>
                                 </div>
